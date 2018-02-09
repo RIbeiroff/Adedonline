@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         btnCriar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SalaCreate.class);
+                Intent intent = new Intent(MainActivity.this, SalaCreateActivity.class);
                 startActivity(intent);
             }
         });

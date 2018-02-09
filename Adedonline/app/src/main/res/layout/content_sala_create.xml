@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.jadso.adedonline.SalaCreateActivity"
+    tools:showIn="@layout/activity_sala_create">
+
+    <EditText
+        android:id="@+id/edtNomeSala"
+        android:layout_width="364dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nome da Sala"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="6dp"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnAdicionarTema"
+        android:layout_width="367dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="8dp"
+        android:text="Adicionar Tema"
+        app:layout_constraintTop_toBottomOf="@+id/lvTemas"
+        tools:layout_editor_absoluteX="8dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="365dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical|center"
+        android:text="Lista de Temas"
+        android:textSize="25sp"
+        app:layout_constraintTop_toBottomOf="@+id/edtNomeSala"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp" />
+
+    <ListView
+        android:id="@+id/lvTemas"
+        android:layout_width="368dp"
+        android:layout_height="286dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_editor_absoluteX="8dp"
+        tools:ignore="MissingConstraints" />
+
+</android.support.constraint.ConstraintLayout>

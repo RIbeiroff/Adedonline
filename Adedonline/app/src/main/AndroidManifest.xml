@@ -16,13 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SalaCreate">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity
+            android:name=".SalaCreateActivity"
+            android:label="@string/title_activity_sala_create"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".InserirTemaActivity"></activity>
     </application>
 
 </manifest>

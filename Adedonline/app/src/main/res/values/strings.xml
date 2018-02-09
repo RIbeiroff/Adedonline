@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Adedonline</string>
+    <string name="title_activity_sala_create">SalaCreateActivity</string>
 </resources>
