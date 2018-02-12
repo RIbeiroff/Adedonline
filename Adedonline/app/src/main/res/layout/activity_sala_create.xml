@@ -22,13 +22,13 @@
 
     <include layout="@layout/content_sala_create" />
 
-    <android.support.design.widget.FloatingActionButton
+     <!-- <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@android:color/holo_green_dark"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
+        app:srcCompat="@android:drawable/checkbox_on_background" /> -->
 
 </android.support.design.widget.CoordinatorLayout>

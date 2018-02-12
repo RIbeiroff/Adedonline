@@ -7,11 +7,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,13 @@ public class SalaCreateActivity extends AppCompatActivity {
         listaTemas = (ListView) findViewById(R.id.lvTemas);
 
         listaTemas.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayTemas));
+        listaTemas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getBaseContext(), "item " + arrayTemas.get(i).toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         btnAdicionarTema = (Button) findViewById(R.id.btnAdicionarTema);
 
@@ -45,7 +54,7 @@ public class SalaCreateActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +62,7 @@ public class SalaCreateActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
 
             }
-        });
+        });*/
     }
 
 }
