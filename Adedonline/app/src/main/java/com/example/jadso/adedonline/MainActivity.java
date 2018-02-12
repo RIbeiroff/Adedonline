@@ -18,6 +18,14 @@ public class MainActivity extends AppCompatActivity {
         btnEntrar = (Button) findViewById(R.id.btnEntrar);
         btnCriar = (Button) findViewById(R.id.btnCriar);
 
+        btnEntrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public  void onClick(View v){
+                Intent intent = new Intent(MainActivity.this, SalaEntrar.class);
+                startActivity(intent);
+            }
+        });
+
         btnCriar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
