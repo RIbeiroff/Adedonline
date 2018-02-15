@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.jadso.adedonline.Model.Sala;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +21,10 @@ public class SalaCreateActivity extends AppCompatActivity {
 
     public static List<String> arrayTemas = new ArrayList<>();
     EditText edtNomeSala;
+    EditText edtQtdeRodadas;
     ListView listaTemas;
     Button btnAdicionarTema;
+    public static ArrayAdapter adapterTemas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +34,19 @@ public class SalaCreateActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         edtNomeSala = (EditText) findViewById(R.id.edtNomeSala);
+        edtQtdeRodadas = (EditText) findViewById(R.id.edtQtdeRodadas);
         listaTemas = (ListView) findViewById(R.id.lvTemas);
+        adapterTemas = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayTemas);
 
-        listaTemas.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayTemas));
+        listaTemas.setAdapter(adapterTemas);
         listaTemas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getBaseContext(), "item " + arrayTemas.get(i).toString(), Toast.LENGTH_LONG).show();
+                Intent intent =  new Intent(SalaCreateActivity.this, AlterarTemaActivity.class);
+                intent.putExtra("item", i);
+                startActivity(intent);
             }
         });
-
 
         btnAdicionarTema = (Button) findViewById(R.id.btnAdicionarTema);
 
@@ -60,6 +67,11 @@ public class SalaCreateActivity extends AppCompatActivity {
 
             }
         });*/
+    }
+
+    public void onResume() {
+        super.onResume();
+
     }
 
 }
