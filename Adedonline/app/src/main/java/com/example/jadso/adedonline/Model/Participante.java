@@ -1,22 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.jadso.adedonline.Model;
 
 import java.io.Serializable;
 import java.net.InetAddress;
 
 /**
- *
- * @author jadso
+ * Created by jadso on 12/02/2018.
  */
 
 public class Participante implements Serializable {
+
     public InetAddress EnderecoIp;
     public int porta;
-    
+
     public Participante(InetAddress  EnderecoIp, int porta){
         this.EnderecoIp = EnderecoIp;
         this.porta = porta;

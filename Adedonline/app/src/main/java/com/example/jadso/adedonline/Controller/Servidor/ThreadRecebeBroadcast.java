@@ -6,8 +6,6 @@
 package com.example.jadso.adedonline.Controller.Servidor;
 
 
-import com.example.jadso.adedonline.Model.Categoria;
-import com.example.jadso.adedonline.Model.Participante;
 import com.example.jadso.adedonline.Model.Sala;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
