@@ -14,16 +14,16 @@ import android.widget.Toast;
 
 import com.example.jadso.adedonline.Model.Sala;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SalaCreateActivity extends AppCompatActivity {
 
     public static List<String> arrayTemas = new ArrayList<>();
-    EditText edtNomeSala;
-    EditText edtQtdeRodadas;
+    EditText edtNomeSala, edtQtdeRodadas;
     ListView listaTemas;
-    Button btnAdicionarTema;
+    Button btnAdicionarTema, btnConcluir;
     public static ArrayAdapter adapterTemas;
 
     @Override
@@ -36,7 +36,11 @@ public class SalaCreateActivity extends AppCompatActivity {
         edtNomeSala = (EditText) findViewById(R.id.edtNomeSala);
         edtQtdeRodadas = (EditText) findViewById(R.id.edtQtdeRodadas);
         listaTemas = (ListView) findViewById(R.id.lvTemas);
+        btnAdicionarTema = (Button) findViewById(R.id.btnAdicionarTema);
+        btnConcluir = (Button) findViewById(R.id.btnConcluir);
+
         adapterTemas = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayTemas);
+
 
         listaTemas.setAdapter(adapterTemas);
         listaTemas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -48,13 +52,38 @@ public class SalaCreateActivity extends AppCompatActivity {
             }
         });
 
-        btnAdicionarTema = (Button) findViewById(R.id.btnAdicionarTema);
 
         btnAdicionarTema.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SalaCreateActivity.this, InserirTemaActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnConcluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+
+                //Fazer tratamento para testar se todos os campos estão nukos
+
+               //Crianção do objeto sala
+                Sala sala = new Sala();
+                sala.nome = edtNomeSala.getText().toString();
+                sala.totalRodadas =  Integer.parseInt(edtQtdeRodadas.getText().toString());
+                sala.categorias.addAll(arrayTemas.subList(0, arrayTemas.size()));
+
+                int porta = 12345;
+
+                //Iniciar a thread responsavel por ouvir os broadcast da rede
+                new Thread( new com.example.jadso.adedonline.Controller.Servidor.ThreadRecebeBroadcast(sala, porta)).start();
+
+                try {
+                    //Iniciar a thread responsável por aceitar a conexao
+                    new Thread( new com.example.jadso.adedonline.Controller.Servidor.ThreadGerenciamentoServidor(sala, porta)).start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

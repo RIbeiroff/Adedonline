@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Sala implements Serializable {
     public String nome;
     public int totalRodadas;
-    public ArrayList<Categoria> categorias;
+    public ArrayList<String> categorias;
     public ArrayList<Participante> participantes;
 
     public Sala(){
@@ -50,7 +50,7 @@ public class Sala implements Serializable {
         this.participantes.remove(participante);
     }
 
-    public void addCategoria(Categoria categoria){
+    public void addCategoria(String categoria){
         this.categorias.add(categoria);
     }
 
@@ -58,7 +58,7 @@ public class Sala implements Serializable {
         this.categorias.remove(indice);
     }
 
-    public void removeCategoria(Categoria categoria){
+    public void removeCategoria(String categoria){
         this.categorias.remove(categoria);
     }
 
@@ -68,8 +68,8 @@ public class Sala implements Serializable {
 
         if (this.categorias.size() > 0){
             exibicao += "Categorias: \n";
-            for (Categoria categoria : this.categorias){
-                exibicao += categoria.getCategoria() + "\n";
+            for (String categoria : this.categorias){
+                exibicao += categoria + "\n";
             }
         }
 

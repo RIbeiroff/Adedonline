@@ -42,6 +42,7 @@ public class ThreadGerenciamentoServidor implements Runnable{
             try {
                 Socket conexaoSocket = servidor.accept();
                 sala.participantes.add( new Participante(conexaoSocket.getInetAddress(), conexaoSocket.getPort()));
+                System.out.println("Chegou novo particpante...");
             } catch (IOException ex) {
                 Logger.getLogger(ThreadGerenciamentoServidor.class.getName()).log(Level.SEVERE, null, ex);
             }

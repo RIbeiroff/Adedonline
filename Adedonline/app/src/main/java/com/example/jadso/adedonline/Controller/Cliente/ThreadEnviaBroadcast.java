@@ -9,15 +9,18 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ThreadEnviaBroadcast implements Runnable {
 
     int porta;
     ArrayList<String> nomes;
+    ArrayList<DatagramPacket> pacotes_servidores;
 
-    public ThreadEnviaBroadcast(int porta, ArrayList<String> nomes) {
+    public ThreadEnviaBroadcast(int porta, ArrayList<String> nomes, ArrayList<DatagramPacket> pacotes_servidores) {
         this.porta = porta;
         this.nomes = nomes;
+        this.pacotes_servidores = pacotes_servidores;
     }
 
 	@Override
@@ -38,6 +41,7 @@ public class ThreadEnviaBroadcast implements Runnable {
                             ds.receive(pkg1);
                             System.out.println("Pacote recebido...");
                             nomes.add(new String (pkg1.getData(), 0 , pkg1.getLength()));
+                            pacotes_servidores.add(pkg1);
                         }
                     } catch (SocketTimeoutException ste){
                         System.out.println("Tempo encerrado...");

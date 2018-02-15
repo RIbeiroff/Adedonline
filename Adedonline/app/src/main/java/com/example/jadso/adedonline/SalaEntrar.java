@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.DatagramPacket;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -24,6 +25,7 @@ public class SalaEntrar extends AppCompatActivity {
     public static ListView listView1;
     public static ArrayList<String> nome_das_salas = new ArrayList<>();
     public static ArrayAdapter nomes_das_salas_Adapter;
+    public static ArrayList<DatagramPacket> pacotes_servidores = new ArrayList<DatagramPacket>();
 
     public void atualizaListView() {
         if (nomes_das_salas_Adapter == null) {
@@ -47,7 +49,7 @@ public class SalaEntrar extends AppCompatActivity {
         listView1.setAdapter(nomes_das_salas_Adapter);
 
         final Thread t1 = new Thread( new com.example.jadso.adedonline.Controller.Cliente.ThreadEnviaBroadcast
-                        (12345, nome_das_salas));
+                        (12345, nome_das_salas, pacotes_servidores));
 
         t1.start();
 
