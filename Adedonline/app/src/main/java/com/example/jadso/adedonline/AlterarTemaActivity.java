@@ -12,6 +12,7 @@ public class AlterarTemaActivity extends AppCompatActivity {
 
     EditText edtAlterar;
     Button btnAlterar;
+    Button btnExcluir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,20 @@ public class AlterarTemaActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Informe um Tema", Toast.LENGTH_SHORT).show();
                 }else {
                     SalaCreateActivity.arrayTemas.set(item, edtAlterar.getText().toString());
+                    SalaCreateActivity.adapterTemas.notifyDataSetChanged();
+                    finish();
+                }
+            }
+        });
+
+        btnExcluir = (Button) findViewById(R.id.btnExcluir);
+        btnExcluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (edtAlterar.getText().toString().equals("")){
+                    Toast.makeText(getBaseContext(), "Informe um Tema", Toast.LENGTH_SHORT).show();
+                }else {
+                    SalaCreateActivity.arrayTemas.remove(item);
                     SalaCreateActivity.adapterTemas.notifyDataSetChanged();
                     finish();
                 }
