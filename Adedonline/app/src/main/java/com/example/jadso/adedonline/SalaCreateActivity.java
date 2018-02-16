@@ -78,12 +78,14 @@ public class SalaCreateActivity extends AppCompatActivity {
                 //Iniciar a thread responsavel por ouvir os broadcast da rede
                 new Thread( new com.example.jadso.adedonline.Controller.Servidor.ThreadRecebeBroadcast(sala, porta)).start();
 
+                /*
                 try {
                     //Iniciar a thread responsável por aceitar a conexao
                     new Thread( new com.example.jadso.adedonline.Controller.Servidor.ThreadGerenciamentoServidor(sala, porta)).start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                */
             }
         });
 
