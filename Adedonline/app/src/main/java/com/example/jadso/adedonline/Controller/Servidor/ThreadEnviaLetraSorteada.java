@@ -1,7 +1,9 @@
 package com.example.jadso.adedonline.Controller.Servidor;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -24,9 +26,12 @@ public class ThreadEnviaLetraSorteada implements Runnable {
         //Percorrendo as conexoes e enviando a letra sorteada
         for (Socket participante : socketParticpantes){
             try {
+                System.out.println("Enviando ao participante: " + participante.getInetAddress() + " / " + participante.getPort());
                 DataOutputStream saida = new DataOutputStream(participante.getOutputStream()); //Cadeia de saída
-                saida.writeChar(letraSorteada);
+                BufferedReader inFromServer = new BufferedReader((new InputStreamReader(participante.getInputStream())));
+                saida.writeBytes( this.letraSorteada + "" + '\n');
                 saida.flush();
+                System.out.println("Enviado letra ao particiapnte: " + letraSorteada);
             } catch (IOException e) {
                 e.printStackTrace();
             }

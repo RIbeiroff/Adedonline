@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.DatagramPacket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -28,6 +29,8 @@ public class SalaEntrar extends AppCompatActivity {
     public static ArrayList<String> nome_das_salas = new ArrayList<>();
     public static ArrayAdapter nomes_das_salas_Adapter;
     public static ArrayList<DatagramPacket> pacotes_servidores = new ArrayList<DatagramPacket>();
+    public static Socket conexao;
+    public static char letraSorteada;
 
     public void atualizaListView() {
         if (nomes_das_salas_Adapter == null) {
@@ -62,7 +65,6 @@ public class SalaEntrar extends AppCompatActivity {
                 dlg.setMessage("Tem certeza que deseja entrar nessa sala?"); //Setando mensagem
 
 
-
                 dlg.setPositiveButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                         Toast.makeText(SalaEntrar.this, "negativo=" + arg1, Toast.LENGTH_SHORT).show();
@@ -71,7 +73,20 @@ public class SalaEntrar extends AppCompatActivity {
 
                 dlg.setNegativeButton("Sim, eu desejo", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Toast.makeText(SalaEntrar.this, "Clicou na sala " + pacotes_servidores.get(position).getAddress(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SalaEntrar.this, "Entrou na sala " + pacotes_servidores.get(position).getAddress(), Toast.LENGTH_SHORT).show();
+
+                        //Iniciando a thread que faz a conexao com o servidor
+                        //Pametros socket, pacote do arrayList recebido do servidor, porta, char com a letra sorteada
+                        new Thread(new com.example.jadso.adedonline.Controller.Cliente.ThreadRecebeDadosServidor(conexao, pacotes_servidores.get(position),
+                                                                                                                    12345, letraSorteada)).start();
+
+                        //Iniciar a tela que visualiza a letra
+                        Intent intent = new Intent(SalaEntrar.this, SalaLetraSorteada.class);
+                        String letra = letraSorteada + "";
+                        if (!letra.isEmpty()){
+                            intent.putExtra("LetraSorteada", letra);
+                            startActivity(intent);
+                        }
                     }
                 });
 

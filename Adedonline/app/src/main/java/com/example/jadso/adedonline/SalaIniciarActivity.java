@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.jadso.adedonline.Model.Participante;
 import com.example.jadso.adedonline.Model.Sala;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SalaIniciar extends AppCompatActivity {
+public class SalaIniciarActivity extends AppCompatActivity {
     private Button btnAtualizar, btnIniciar;
     private ListView listView1;
     public ArrayList<String> participantes = new ArrayList<String>();
@@ -100,9 +99,21 @@ public class SalaIniciar extends AppCompatActivity {
         btnIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                char letraSorteada = sortearLetra();
+                    //Sortea Letra
+                 char letraSorteada = sortearLetra();
 
-                Intent intent = new Intent(SalaIniciar.this, SalaIniciar.class);
+                 System.out.println("Letra Sorteada: " + letraSorteada);
+
+                 //Enviar a letra sorteada e as categorias para montar o quadro de respostas
+                 Intent intent = new Intent(SalaIniciarActivity.this, SalaLetraSorteada.class);
+                 intent.putExtra("LetraSorteada",letraSorteada+"");
+                 intent.putExtra("Categorias",sala.categorias);
+
+                 //Dispara Thread que envia letra aos participantes
+                 new Thread(new com.example.jadso.adedonline.Controller.Servidor.ThreadEnviaLetraSorteada(sala.getParticipantes(), letraSorteada)).start();
+
+                 //Chama a tela de visualizar a letra sorteada
+                 startActivity(intent);
             }
         });
     }

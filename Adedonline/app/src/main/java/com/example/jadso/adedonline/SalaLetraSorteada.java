@@ -1,9 +1,12 @@
 package com.example.jadso.adedonline;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.jadso.adedonline.Model.Sala;
 
 import org.w3c.dom.Text;
 
@@ -24,7 +27,9 @@ public class SalaLetraSorteada extends AppCompatActivity {
         txtView2 = (TextView) findViewById(R.id.txtView2);
         btnConfirmar = (Button) findViewById(R.id.btnConfirmar);
 
+        Intent intent = getIntent();
+        String LetraSorteada = (String) intent.getSerializableExtra("LetraSorteada");
 
-
+        txtView2.setText(LetraSorteada.toString());
     }
 }
