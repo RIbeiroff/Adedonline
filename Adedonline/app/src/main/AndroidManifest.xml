@@ -25,8 +25,10 @@
         <activity android:name=".InserirTemaActivity" />
         <activity
             android:name=".SalaEntrar"
-            android:label="Entrar numa sala"></activity>
-        <activity android:name=".AlterarTemaActivity"></activity>
+            android:label="Entrar numa sala" />
+        <activity android:name=".AlterarTemaActivity" />
+        <activity android:name=".SalaIniciar" />
+        <activity android:name=".SalaLetraSorteada"></activity>
     </application>
 
 </manifest>

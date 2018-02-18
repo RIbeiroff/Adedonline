@@ -73,10 +73,12 @@ public class SalaCreateActivity extends AppCompatActivity {
                 sala.totalRodadas =  Integer.parseInt(edtQtdeRodadas.getText().toString());
                 sala.categorias.addAll(arrayTemas.subList(0, arrayTemas.size()));
 
-                int porta = 12345;
 
-                //Iniciar a thread responsavel por ouvir os broadcast da rede
-                new Thread( new com.example.jadso.adedonline.Controller.Servidor.ThreadRecebeBroadcast(sala, porta)).start();
+
+                Intent intent = new Intent(SalaCreateActivity.this, SalaIniciar.class);
+                intent.putExtra("Sala", sala);
+                startActivity(intent);
+
 
                 /*
                 try {

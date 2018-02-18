@@ -1,7 +1,9 @@
 package com.example.jadso.adedonline;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -55,8 +57,36 @@ public class SalaEntrar extends AppCompatActivity {
 
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(SalaEntrar.this); //Criando AlertDialog
+                dlg.setMessage("Tem certeza que deseja entrar nessa sala?"); //Setando mensagem
 
+
+
+                dlg.setPositiveButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(SalaEntrar.this, "negativo=" + arg1, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                dlg.setNegativeButton("Sim, eu desejo", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(SalaEntrar.this, "Clicou na sala " + pacotes_servidores.get(position).getAddress(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                /*
+                dlg.setNeutralButton("Sim, eu desejo", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(SalaEntrar.this, "Clicou na sala " + pacotes_servidores.get(position).getAddress(), Toast.LENGTH_SHORT).show();
+                    };
+                });
+
+                dlg.setNeutralButton("Cancelar", null);
+                */
+
+                dlg.show();
             }
         });
 

@@ -1,6 +1,7 @@
 package com.example.jadso.adedonline.Model;
 
 import java.io.Serializable;
+import java.net.Socket;
 import java.util.ArrayList;
 
 /**
@@ -11,14 +12,14 @@ public class Sala implements Serializable {
     public String nome;
     public int totalRodadas;
     public ArrayList<String> categorias;
-    public ArrayList<Participante> participantes;
+    public ArrayList<Socket> participantes;
 
     public Sala(){
         this.participantes = new ArrayList();
         this.categorias = new ArrayList();
     }
 
-    public Sala(String nome, ArrayList<Participante> participantes){
+    public Sala(String nome, ArrayList<Socket> participantes){
         this.participantes = participantes;
     }
 
@@ -30,15 +31,15 @@ public class Sala implements Serializable {
         this.nome = nome;
     }
 
-    public ArrayList<Participante> getParticipantes() {
+    public ArrayList<Socket> getParticipantes() {
         return participantes;
     }
 
-    public void setParticipantes(ArrayList<Participante> participantes) {
+    public void setParticipantes(ArrayList<Socket> participantes) {
         this.participantes = participantes;
     }
 
-    public void addParticipante(Participante participante){
+    public void addParticipante(Socket participante){
         this.participantes.add(participante);
     }
 
@@ -46,7 +47,7 @@ public class Sala implements Serializable {
         this.participantes.remove(indice);
     }
 
-    public void removeParticipante(Participante participante){
+    public void removeParticipante(Socket participante){
         this.participantes.remove(participante);
     }
 
@@ -75,8 +76,8 @@ public class Sala implements Serializable {
 
         if (this.participantes.size() > 0){
             exibicao += "Participantes: \n";
-            for (Participante participante : this.participantes){
-                exibicao += "End ip: " + participante.EnderecoIp + " Porta: " + participante.porta + "\n";
+            for (Socket participante : this.participantes){
+                exibicao += "End ip: " + participante.getInetAddress() + " Porta: " + participante.getPort() + "\n";
             }
         }
 

@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * ele estará fazendo uma solicitação ao serverSocket
  */
 public class ThreadGerenciamentoServidor implements Runnable{
-    
+
     Sala sala;
     int porta;
     ServerSocket servidor;
@@ -41,8 +41,7 @@ public class ThreadGerenciamentoServidor implements Runnable{
         while (true){
             try {
                 Socket conexaoSocket = servidor.accept();
-                sala.participantes.add( new Participante(conexaoSocket.getInetAddress(), conexaoSocket.getPort()));
-                System.out.println("Chegou novo particpante...");
+                sala.participantes.add( conexaoSocket );
             } catch (IOException ex) {
                 Logger.getLogger(ThreadGerenciamentoServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
