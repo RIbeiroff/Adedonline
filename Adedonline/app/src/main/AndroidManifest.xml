@@ -28,7 +28,8 @@
             android:label="Entrar numa sala" />
         <activity android:name=".AlterarTemaActivity" />
         <activity android:name=".SalaIniciarActivity" />
-        <activity android:name=".SalaLetraSorteada"></activity>
+        <activity android:name=".SalaLetraSorteada" />
+        <activity android:name=".SalaLetraSorteadaServidorActivity"></activity>
     </application>
 
 </manifest>

@@ -5,11 +5,15 @@
  */
 package com.example.jadso.adedonline.Controller.Servidor;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import com.example.jadso.adedonline.Model.Sala;
 import com.example.jadso.adedonline.Model.Participante;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,10 +27,16 @@ public class ThreadGerenciamentoServidor implements Runnable{
     Sala sala;
     int porta;
     ServerSocket servidor;
-    
-    public ThreadGerenciamentoServidor(Sala sala, int porta) throws IOException{
+    ArrayAdapter arrayAdapter;
+    ListView lista;
+    ArrayList<String> participantes = new ArrayList();
+
+    public ThreadGerenciamentoServidor(Sala sala, int porta, ListView lista, ArrayAdapter arrayAdapter, ArrayList<String> participantes) throws IOException{
         this.sala = sala;
         this.porta = porta;
+        this.lista = lista;
+        this.arrayAdapter = arrayAdapter;
+        this.participantes = participantes;
     }
     
     @Override
@@ -42,6 +52,8 @@ public class ThreadGerenciamentoServidor implements Runnable{
             try {
                 Socket conexaoSocket = servidor.accept();
                 sala.participantes.add( conexaoSocket );
+                //AsyncTaskAtualizaListView asyncTaskAtualizaListView = new AsyncTaskAtualizaListView(1, this.lista, this.participantes, this.arrayAdapter, this.sala);
+                //asyncTaskAtualizaListView.execute(1);
             } catch (IOException ex) {
                 Logger.getLogger(ThreadGerenciamentoServidor.class.getName()).log(Level.SEVERE, null, ex);
             }

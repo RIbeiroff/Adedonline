@@ -52,7 +52,6 @@ public class SalaIniciarActivity extends AppCompatActivity {
             participantes.add(participante.getInetAddress().toString());
         }
 
-
         if (endereco_dos_participantes == null) {
             endereco_dos_participantes = new ArrayAdapter(this, android.R.layout.simple_list_item_1, participantes);
             listView1.setAdapter(endereco_dos_participantes);
@@ -73,6 +72,8 @@ public class SalaIniciarActivity extends AppCompatActivity {
         btnAtualizar = (Button) findViewById(R.id.btnAtualizar);
         btnIniciar = (Button) findViewById(R.id.btnIniciar);
 
+        //Inicializando ArrayAdapter
+       // endereco_dos_participantes = new ArrayAdapter(this, android.R.layout.simple_list_item_1, participantes);
 
         Intent intent = getIntent();
         this.sala = (Sala) intent.getSerializableExtra("Sala");
@@ -83,7 +84,7 @@ public class SalaIniciarActivity extends AppCompatActivity {
         new Thread( new com.example.jadso.adedonline.Controller.Servidor.ThreadRecebeBroadcast(this.sala, porta)).start();
 
         try {
-            new Thread( new com.example.jadso.adedonline.Controller.Servidor.ThreadGerenciamentoServidor(this.sala, porta)).start();
+            new Thread( new com.example.jadso.adedonline.Controller.Servidor.ThreadGerenciamentoServidor(this.sala, porta, listView1, endereco_dos_participantes, participantes)).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,21 +100,20 @@ public class SalaIniciarActivity extends AppCompatActivity {
         btnIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    //Sortea Letra
+                 //Sortea Letra
                  char letraSorteada = sortearLetra();
 
                  System.out.println("Letra Sorteada: " + letraSorteada);
 
                  //Enviar a letra sorteada e as categorias para montar o quadro de respostas
-                 Intent intent = new Intent(SalaIniciarActivity.this, SalaLetraSorteada.class);
-                 intent.putExtra("LetraSorteada",letraSorteada+"");
-                 intent.putExtra("Categorias",sala.categorias);
+                 Intent intent = new Intent(SalaIniciarActivity.this, SalaLetraSorteadaServidorActivity.class);
+                 intent.putExtra("LetraSorteada", letraSorteada);
+                 startActivity(intent);
 
                  //Dispara Thread que envia letra aos participantes
                  new Thread(new com.example.jadso.adedonline.Controller.Servidor.ThreadEnviaLetraSorteada(sala.getParticipantes(), letraSorteada)).start();
 
                  //Chama a tela de visualizar a letra sorteada
-                 startActivity(intent);
             }
         });
     }
