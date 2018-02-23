@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jadso.adedonline.Controller.Cliente.AsyncTaskEnviaBroadcast;
+
 import java.net.DatagramPacket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -24,13 +26,13 @@ import static java.lang.Thread.sleep;
  */
 
 public class SalaEntrar extends AppCompatActivity {
-    private TextView txtView1;
+    public static TextView txtView1;
     public static ListView listView1;
     public static ArrayList<String> nome_das_salas = new ArrayList<>();
     public static ArrayAdapter nomes_das_salas_Adapter;
     public static ArrayList<DatagramPacket> pacotes_servidores = new ArrayList<DatagramPacket>();
-    public static Socket conexao;
     public static char letraSorteada;
+    public int porta = 12345;
 
     public void atualizaListView() {
         if (nomes_das_salas_Adapter == null) {
@@ -52,11 +54,18 @@ public class SalaEntrar extends AppCompatActivity {
         listView1 = (ListView) findViewById(R.id.listView1);
 //        final ArrayAdapter<String> arrayAdapterNomesDasSalas = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         listView1.setAdapter(nomes_das_salas_Adapter);
-
+        listView1.setVisibility(View.GONE);
+        /*
         final Thread t1 = new Thread( new com.example.jadso.adedonline.Controller.Cliente.ThreadEnviaBroadcast
                         (12345, nome_das_salas, pacotes_servidores));
 
         t1.start();
+        */
+
+
+        // Construtor - int porta, ArrayList<String> nomesDasSalas, ArrayList<DatagramPacket> pacotes_servidores, ArrayAdapter nomes_das_salas_Adapter, ListView listView
+        AsyncTaskEnviaBroadcast servidores = new AsyncTaskEnviaBroadcast(12345, nome_das_salas, pacotes_servidores, nomes_das_salas_Adapter, listView1, txtView1);
+        servidores.execute(1);
 
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -77,16 +86,22 @@ public class SalaEntrar extends AppCompatActivity {
 
                         //Iniciando a thread que faz a conexao com o servidor
                         //Pametros socket, pacote do arrayList recebido do servidor, porta, char com a letra sorteada
-                        new Thread(new com.example.jadso.adedonline.Controller.Cliente.ThreadRecebeDadosServidor(conexao, pacotes_servidores.get(position),
-                                                                                                                    12345, letraSorteada)).start();
+                        //new Thread(new com.example.jadso.adedonline.Controller.Cliente.ThreadRecebeDadosServidor(conexao, pacotes_servidores.get(position),
+                          //                                                                                          12345, letraSorteada)).start();
 
                         //Iniciar a tela que visualiza a letra
                         Intent intent = new Intent(SalaEntrar.this, SalaLetraSorteada.class);
-                        String letra = letraSorteada + "";
+                        intent.putExtra("IP", pacotes_servidores.get(position).getAddress());
+                        intent.putExtra("Porta", porta);
+                        startActivity(intent);
+
+                        /*
+                        String letra = 'a' + "";
                         if (!letra.isEmpty()){
+                            System.out.println("Startei a intent");
                             intent.putExtra("LetraSorteada", letra);
                             startActivity(intent);
-                        }
+                        */
                     }
                 });
 
