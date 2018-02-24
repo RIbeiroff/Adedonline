@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SalaIniciarActivity extends AppCompatActivity {
-    private Button btnAtualizar, btnIniciar;
+    private Button btnIniciar;
     private ListView listView1;
     public ArrayList<String> participantes = new ArrayList<String>();
     public ArrayAdapter<String> endereco_dos_participantes;
@@ -45,6 +45,7 @@ public class SalaIniciarActivity extends AppCompatActivity {
         return '-';
     }
 
+    /*
     public void atualizaListView() {
         participantes.clear();
 
@@ -52,16 +53,10 @@ public class SalaIniciarActivity extends AppCompatActivity {
             participantes.add(participante.getInetAddress().toString());
         }
 
-        if (endereco_dos_participantes == null) {
-            endereco_dos_participantes = new ArrayAdapter(this, android.R.layout.simple_list_item_1, participantes);
-            listView1.setAdapter(endereco_dos_participantes);
-            System.out.println("Passei pelo if");
-        } else {
-            endereco_dos_participantes.notifyDataSetChanged();
-            System.out.println("Passei pelo else");
-        }
+        endereco_dos_participantes.notifyDataSetChanged();
+        System.out.println("Passei pelo else");
     }
-
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +64,11 @@ public class SalaIniciarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sala_iniciar);
 
         listView1 = (ListView) findViewById(R.id.listView1);
-        btnAtualizar = (Button) findViewById(R.id.btnAtualizar);
         btnIniciar = (Button) findViewById(R.id.btnIniciar);
 
         //Inicializando ArrayAdapter
-       // endereco_dos_participantes = new ArrayAdapter(this, android.R.layout.simple_list_item_1, participantes);
+        endereco_dos_participantes = new ArrayAdapter(this, android.R.layout.simple_list_item_1, participantes);
+        listView1.setAdapter(endereco_dos_participantes);
 
         Intent intent = getIntent();
         this.sala = (Sala) intent.getSerializableExtra("Sala");
@@ -89,14 +84,14 @@ public class SalaIniciarActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
+/*
         btnAtualizar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 atualizaListView();
             }
         });
-
+*/
         btnIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

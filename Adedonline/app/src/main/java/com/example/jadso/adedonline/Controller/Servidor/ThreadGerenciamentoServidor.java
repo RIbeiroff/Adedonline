@@ -52,8 +52,8 @@ public class ThreadGerenciamentoServidor implements Runnable{
             try {
                 Socket conexaoSocket = servidor.accept();
                 sala.participantes.add( conexaoSocket );
-                //AsyncTaskAtualizaListView asyncTaskAtualizaListView = new AsyncTaskAtualizaListView(1, this.lista, this.participantes, this.arrayAdapter, this.sala);
-                //asyncTaskAtualizaListView.execute(1);
+                AsyncTaskAtualizaListView asyncTaskAtualizaListView = new AsyncTaskAtualizaListView(1, this.lista, this.participantes, this.arrayAdapter, this.sala);
+                asyncTaskAtualizaListView.execute(1);
             } catch (IOException ex) {
                 Logger.getLogger(ThreadGerenciamentoServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
