@@ -3,6 +3,7 @@ package com.example.jadso.adedonline;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,5 +33,13 @@ public class SalaLetraSorteadaServidorActivity extends AppCompatActivity {
         txtView2.setText((letraSorteada + " ").toUpperCase() ) ;
 
         System.out.println(sala.exibirSala());
+
+        btnConfirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SalaLetraSorteadaServidorActivity.this, ResponderActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

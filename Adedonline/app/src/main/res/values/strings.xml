@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Adedonline</string>
     <string name="title_activity_sala_create">SalaCreateActivity</string>
+    <string name="title_activity_responder">ResponderActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

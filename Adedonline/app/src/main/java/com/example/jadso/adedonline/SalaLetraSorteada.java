@@ -42,13 +42,12 @@ public class SalaLetraSorteada extends AppCompatActivity {
         txtView2.setVisibility(View.GONE);
         btnConfirmar.setVisibility(View.GONE);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         InetAddress ip = (InetAddress) intent.getSerializableExtra("IP");
         int porta = (int) intent.getSerializableExtra("Porta");
 
 
         //Criando conexao com o servidor
         new Thread( new ThreadConexaoServidor(conexao, ip, porta, txtView1, txtView2, btnConfirmar)).start();
-
     }
 }

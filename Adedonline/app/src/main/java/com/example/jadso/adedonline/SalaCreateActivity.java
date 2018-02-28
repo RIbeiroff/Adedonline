@@ -77,7 +77,6 @@ public class SalaCreateActivity extends AppCompatActivity {
                 intent.putExtra("Sala", sala);
                 startActivity(intent);
 
-
                 /*
                 try {
                     //Iniciar a thread responsável por aceitar a conexao
