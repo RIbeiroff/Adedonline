@@ -21,6 +21,12 @@ public class SalaLetraSorteadaServidorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sala_letra_sorteada_servidor);
 
+        /*
+        * Iniciar a escuta do stop
+        * */
+
+
+
         txtView1 = (TextView) findViewById(R.id.textView1);
         txtView2 = (TextView) findViewById(R.id.textView2);
         btnConfirmar = (Button) findViewById(R.id.btnConfirmar);
@@ -37,7 +43,8 @@ public class SalaLetraSorteadaServidorActivity extends AppCompatActivity {
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SalaLetraSorteadaServidorActivity.this, ResponderActivity.class);
+                //Intent intent = new Intent(SalaLetraSorteadaServidorActivity.this, ResponderActivity.class);
+                Intent intent = new Intent(SalaLetraSorteadaServidorActivity.this, ResponderServidorActivity.class);
                 startActivity(intent);
             }
         });

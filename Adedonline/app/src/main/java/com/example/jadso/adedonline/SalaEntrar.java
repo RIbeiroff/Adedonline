@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jadso.adedonline.Controller.Cliente.AsyncTaskEnviaBroadcast;
+import com.example.jadso.adedonline.Controller.Cliente.ThreadConexaoServidor;
 
 import java.net.DatagramPacket;
 import java.net.Socket;
@@ -29,10 +30,13 @@ public class SalaEntrar extends AppCompatActivity {
     public static TextView txtView1;
     public static ListView listView1;
     public static ArrayList<String> nome_das_salas = new ArrayList<>();
+    public static ArrayList<String> temas_da_sala_escolhida = new ArrayList<>();
     public static ArrayAdapter nomes_das_salas_Adapter;
     public static ArrayList<DatagramPacket> pacotes_servidores = new ArrayList<DatagramPacket>();
     public static char letraSorteada;
     public int porta = 12345;
+    public int sala_escolhida = -1;
+    Socket conexao;
 
     public void atualizaListView() {
         if (nomes_das_salas_Adapter == null) {
@@ -84,6 +88,10 @@ public class SalaEntrar extends AppCompatActivity {
                     public void onClick(DialogInterface arg0, int arg1) {
                         Toast.makeText(SalaEntrar.this, "Entrou na sala " + pacotes_servidores.get(position).getAddress(), Toast.LENGTH_SHORT).show();
 
+                        //Iniciar a thread que faz conexao com o servidor e recebe os temas da sala
+                        new Thread( new ThreadConexaoServidor(conexao, pacotes_servidores.get(position).getAddress(), porta, temas_da_sala_escolhida) ).start();
+                        sala_escolhida = position;
+
                         //Iniciando a thread que faz a conexao com o servidor
                         //Pametros socket, pacote do arrayList recebido do servidor, porta, char com a letra sorteada
                         //new Thread(new com.example.jadso.adedonline.Controller.Cliente.ThreadRecebeDadosServidor(conexao, pacotes_servidores.get(position),
@@ -91,8 +99,6 @@ public class SalaEntrar extends AppCompatActivity {
 
                         //Iniciar a tela que visualiza a letra
                         Intent intent = new Intent(SalaEntrar.this, SalaLetraSorteada.class);
-                        intent.putExtra("IP", pacotes_servidores.get(position).getAddress());
-                        intent.putExtra("Porta", porta);
                         startActivity(intent);
 
                         /*

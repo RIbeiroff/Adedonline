@@ -47,7 +47,5 @@ public class SalaLetraSorteada extends AppCompatActivity {
         int porta = (int) intent.getSerializableExtra("Porta");
 
 
-        //Criando conexao com o servidor
-        new Thread( new ThreadConexaoServidor(conexao, ip, porta, txtView1, txtView2, btnConfirmar)).start();
     }
 }
