@@ -2,6 +2,8 @@ package com.example.jadso.adedonline.Controller.Cliente;
 
 import android.content.Intent;
 
+import com.example.jadso.adedonline.SalaLetraSorteada;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -19,28 +21,32 @@ public class ThreadRecebeDadosServidor implements Runnable {
     int porta;
     DatagramPacket pacote;
     Socket conexao;
-    DataOutputStream saidaDeDados;
     BufferedReader entradaDeDados;
     char letraSorteada;
 
-    public ThreadRecebeDadosServidor(Socket conexao, DatagramPacket pacote, int porta, char letraSorteada) {
+    public ThreadRecebeDadosServidor(Socket conexao, DatagramPacket pacote, int porta) {
         this.pacote = pacote;
         this.porta = porta;
         this.conexao = conexao;
-        conectarAoServidor();
     }
 
-    public void conectarAoServidor(){
-        if (pacote != null){
-            try {
-                this.conexao = new Socket(pacote.getAddress(), this.porta);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    @Override
+    public void run() {
+        try {
+            configurarEntradaDeDados();
 
-        configurarEntradaDeDados();
-        configurarSaidaDeDados();
+            this.letraSorteada = entradaDeDados.readLine().charAt(0); // Aguardando o recebimento da letra sorteada
+
+            //Ao receber a letra sorteada starta a tarefa responsável pela atualização da tela
+            //Nela será mudado o texto do título, exibe a letra recebida e exibe o botão confirmar
+            SalaLetraSorteada.letraSorteada = this.letraSorteada; //Altera o char da letra sorteada da activity
+            AsyncTaskRecebeLetraServidor asyncTaskLetraSorteada = new AsyncTaskRecebeLetraServidor(this.letraSorteada, SalaLetraSorteada.txtView1,
+                                                                                          SalaLetraSorteada.txtView2, SalaLetraSorteada.btnConfirmar);
+            asyncTaskLetraSorteada.execute(1);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void configurarEntradaDeDados(){
@@ -50,25 +56,6 @@ public class ThreadRecebeDadosServidor implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public void configurarSaidaDeDados(){
-        if (this.conexao != null){
-            try {
-                this.saidaDeDados = new DataOutputStream(conexao.getOutputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void run() {
-        try {
-            this.letraSorteada = entradaDeDados.readLine().charAt(0);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

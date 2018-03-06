@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.jadso.adedonline.Controller.Cliente.AsyncTaskEnviaBroadcast;
 import com.example.jadso.adedonline.Controller.Cliente.AsyncTaskRecebeLetraServidor;
 import com.example.jadso.adedonline.Controller.Cliente.ThreadConexaoServidor;
+import com.example.jadso.adedonline.Controller.Cliente.ThreadRecebeDadosServidor;
 import com.example.jadso.adedonline.Model.Conexao;
 import com.example.jadso.adedonline.Model.Sala;
 
@@ -27,6 +28,7 @@ public class SalaLetraSorteada extends AppCompatActivity {
     public static Button btnConfirmar;
     public static Conexao conexao = new Conexao();
     int porta = 12345;
+    public static char letraSorteada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +46,21 @@ public class SalaLetraSorteada extends AppCompatActivity {
 
         final Intent intent = getIntent();
         InetAddress ip = (InetAddress) intent.getSerializableExtra("IP");
-        int porta = (int) intent.getSerializableExtra("Porta");
+        porta = (int) intent.getSerializableExtra("Porta");
 
+        //Startar a thread que recebe a letra sorteada
+        System.out.println(SalaEntrar.sala_escolhida);
+        new Thread( new ThreadRecebeDadosServidor(SalaEntrar.conexao, SalaEntrar.pacotes_servidores.get(SalaEntrar.sala_escolhida), this.porta)).start();
+
+
+        btnConfirmar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                //Iniciarlizar a tela de resposta
+                Intent intent = new Intent(SalaLetraSorteada.this, ResponderClienteActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

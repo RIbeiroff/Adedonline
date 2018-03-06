@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.example.jadso.adedonline.Controller.Cliente.ThreadDisparaStop;
 import com.example.jadso.adedonline.Controller.Cliente.ThreadEscutaStop;
+import com.example.jadso.adedonline.Model.TemasAdapter;
+
+import java.util.ArrayList;
 
 
 /**
@@ -30,8 +33,13 @@ public class ResponderClienteActivity extends AppCompatActivity {
         btnEnviar = (FloatingActionButton) findViewById(R.id.btnEnviar);
         txtTitulo = (TextView) findViewById(R.id.txtTitulo);
 
+        //Construção do listView de acordo com os temas recebidos do servidor
+        ArrayList<String> temas = (ArrayList) SalaEntrar.temas_da_sala_escolhida;
+        TemasAdapter temasAdapter = new TemasAdapter(this, temas);
+        listViewResposta.setAdapter(temasAdapter);
+
         //Escutando stop do servidor
-        new Thread( new ThreadEscutaStop(SalaLetraSorteada.conexao.conexao)).start();
+        new Thread( new ThreadEscutaStop(SalaEntrar.conexao)).start();
 
         btnEnviar.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -41,7 +49,11 @@ public class ResponderClienteActivity extends AppCompatActivity {
 
                 //Disparando stop para o servidor
                 new Thread( new ThreadDisparaStop(SalaLetraSorteada.conexao.conexao)).start();
+
+
                 /*
+                Código para percorrer os edit text do list view e armazenar o texto de cada um
+
                 int tamanhoListView = listViewResposta.getChildCount();
                 View v;
                 EditText edtResposta;

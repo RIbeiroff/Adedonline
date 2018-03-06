@@ -30,7 +30,8 @@
         <activity android:name=".SalaIniciarActivity" />
         <activity android:name=".SalaLetraSorteada" />
         <activity android:name=".SalaLetraSorteadaServidorActivity" />
-        <activity android:name=".ResponderActivity"></activity>
+        <activity android:name=".ResponderClienteActivity"/>
+        <activity android:name=".ResponderServidorActivity"/>
     </application>
 
 </manifest>

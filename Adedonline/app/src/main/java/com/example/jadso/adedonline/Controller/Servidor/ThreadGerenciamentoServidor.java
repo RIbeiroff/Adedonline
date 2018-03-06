@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 import com.example.jadso.adedonline.Model.Sala;
 import com.example.jadso.adedonline.Model.Participante;
+import com.example.jadso.adedonline.SalaCreateActivity;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -52,8 +54,9 @@ public class ThreadGerenciamentoServidor implements Runnable{
             try {
                 Socket conexaoSocket = servidor.accept();
                 sala.participantes.add( conexaoSocket );
+                new Thread( new ThreadEnviaTemas(conexaoSocket, (ArrayList<String>) SalaCreateActivity.arrayTemas)).start(); //Inicializa a thread responsável pelo envio dos temas ao participante
                 AsyncTaskAtualizaListView asyncTaskAtualizaListView = new AsyncTaskAtualizaListView(1, this.lista, this.participantes, this.arrayAdapter, this.sala);
-                asyncTaskAtualizaListView.execute(1);
+                asyncTaskAtualizaListView.execute(1); //Tarefa responsável por atualizar o listView de participante na tela SalaIniciarActivity
             } catch (IOException ex) {
                 Logger.getLogger(ThreadGerenciamentoServidor.class.getName()).log(Level.SEVERE, null, ex);
             }

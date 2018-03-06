@@ -35,17 +35,8 @@ public class SalaEntrar extends AppCompatActivity {
     public static ArrayList<DatagramPacket> pacotes_servidores = new ArrayList<DatagramPacket>();
     public static char letraSorteada;
     public int porta = 12345;
-    public int sala_escolhida = -1;
-    Socket conexao;
-
-    public void atualizaListView() {
-        if (nomes_das_salas_Adapter == null) {
-            nomes_das_salas_Adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, nome_das_salas);
-            listView1.setAdapter(nomes_das_salas_Adapter);
-        } else
-            nomes_das_salas_Adapter.notifyDataSetChanged();
-    }
-
+    public static int sala_escolhida = -1;
+    public static Socket conexao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +47,8 @@ public class SalaEntrar extends AppCompatActivity {
 
         txtView1 = (TextView) findViewById(R.id.txtView1);
         listView1 = (ListView) findViewById(R.id.listView1);
-//        final ArrayAdapter<String> arrayAdapterNomesDasSalas = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         listView1.setAdapter(nomes_das_salas_Adapter);
         listView1.setVisibility(View.GONE);
-        /*
-        final Thread t1 = new Thread( new com.example.jadso.adedonline.Controller.Cliente.ThreadEnviaBroadcast
-                        (12345, nome_das_salas, pacotes_servidores));
-
-        t1.start();
-        */
-
 
         // Construtor - int porta, ArrayList<String> nomesDasSalas, ArrayList<DatagramPacket> pacotes_servidores, ArrayAdapter nomes_das_salas_Adapter, ListView listView
         AsyncTaskEnviaBroadcast servidores = new AsyncTaskEnviaBroadcast(12345, nome_das_salas, pacotes_servidores, nomes_das_salas_Adapter, listView1, txtView1);
@@ -92,39 +75,17 @@ public class SalaEntrar extends AppCompatActivity {
                         new Thread( new ThreadConexaoServidor(conexao, pacotes_servidores.get(position).getAddress(), porta, temas_da_sala_escolhida) ).start();
                         sala_escolhida = position;
 
-                        //Iniciando a thread que faz a conexao com o servidor
-                        //Pametros socket, pacote do arrayList recebido do servidor, porta, char com a letra sorteada
-                        //new Thread(new com.example.jadso.adedonline.Controller.Cliente.ThreadRecebeDadosServidor(conexao, pacotes_servidores.get(position),
-                          //                                                                                          12345, letraSorteada)).start();
 
                         //Iniciar a tela que visualiza a letra
                         Intent intent = new Intent(SalaEntrar.this, SalaLetraSorteada.class);
+                        intent.putExtra("IP", pacotes_servidores.get(position).getAddress());
+                        intent.putExtra("Porta", pacotes_servidores.get(position).getPort());
                         startActivity(intent);
 
-                        /*
-                        String letra = 'a' + "";
-                        if (!letra.isEmpty()){
-                            System.out.println("Startei a intent");
-                            intent.putExtra("LetraSorteada", letra);
-                            startActivity(intent);
-                        */
                     }
                 });
-
-                /*
-                dlg.setNeutralButton("Sim, eu desejo", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(SalaEntrar.this, "Clicou na sala " + pacotes_servidores.get(position).getAddress(), Toast.LENGTH_SHORT).show();
-                    };
-                });
-
-                dlg.setNeutralButton("Cancelar", null);
-                */
-
                 dlg.show();
             }
         });
-
     }
 }

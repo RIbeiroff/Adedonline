@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.example.jadso.adedonline.Model.Sala;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class SalaCreateActivity extends AppCompatActivity {
     ListView listaTemas;
     Button btnAdicionarTema, btnConcluir;
     public static ArrayAdapter adapterTemas;
+    public int porta = 12345;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +78,6 @@ public class SalaCreateActivity extends AppCompatActivity {
                 Intent intent = new Intent(SalaCreateActivity.this, SalaIniciarActivity.class);
                 intent.putExtra("Sala", sala);
                 startActivity(intent);
-
-                /*
-                try {
-                    //Iniciar a thread responsável por aceitar a conexao
-                    new Thread( new com.example.jadso.adedonline.Controller.Servidor.ThreadGerenciamentoServidor(sala, porta)).start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                */
             }
         });
 
