@@ -21,7 +21,6 @@ public class ThreadRecebeDadosServidor implements Runnable {
     int porta;
     DatagramPacket pacote;
     Socket conexao;
-    BufferedReader entradaDeDados;
     char letraSorteada;
 
     public ThreadRecebeDadosServidor(Socket conexao, DatagramPacket pacote, int porta) {
@@ -33,8 +32,8 @@ public class ThreadRecebeDadosServidor implements Runnable {
     @Override
     public void run() {
         try {
-            configurarEntradaDeDados();
 
+            BufferedReader entradaDeDados = new BufferedReader(new InputStreamReader(this.conexao.getInputStream()));
             this.letraSorteada = entradaDeDados.readLine().charAt(0); // Aguardando o recebimento da letra sorteada
 
             //Ao receber a letra sorteada starta a tarefa responsável pela atualização da tela
@@ -49,13 +48,4 @@ public class ThreadRecebeDadosServidor implements Runnable {
         }
     }
 
-    public void configurarEntradaDeDados(){
-        if (conexao != null){
-            try {
-                this.entradaDeDados = new BufferedReader(new InputStreamReader(this.conexao.getInputStream()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

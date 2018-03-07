@@ -28,6 +28,7 @@ public class ThreadDisparaStop implements Runnable {
         try {
             //Se o STOP não foi disparado
             if (!stopDisparado.getStop()) {
+                System.out.println("Vou enviar o stop aos participantes");
                 stopDisparado.alteraCondicao(); //Ele passa a ser disparado
                 for (Socket participante : conexoes){
                     System.out.println("Enviando a: " + participante.getPort());
@@ -36,6 +37,7 @@ public class ThreadDisparaStop implements Runnable {
                     DataOutputStream saidaDeDados = new DataOutputStream(participante.getOutputStream());
                     saidaDeDados.writeBytes("stop" + '\n'); //Envia a todas as conexões
                     saidaDeDados.flush();
+                    System.out.println("Vou enviar o stop aos participantes");
                 }
             }
         } catch (IOException ex) {

@@ -32,5 +32,7 @@ public class AsyncTaskFinalizaResposta  extends AsyncTask<Integer, Integer, Void
     protected void onProgressUpdate(Integer... values) {
         ResponderServidorActivity.txtTitulo.setText("O stop foi disparado...");
         ResponderServidorActivity.listViewResposta.setVisibility(View.GONE);
+        ResponderServidorActivity.btnEnviar.setVisibility(View.GONE);
+        ResponderServidorActivity.btnEnviarResposta.setVisibility(View.VISIBLE);
     }
 }

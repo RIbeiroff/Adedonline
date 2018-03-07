@@ -2,6 +2,8 @@ package com.example.jadso.adedonline.Controller.Cliente;
 
 import android.provider.ContactsContract;
 
+import com.example.jadso.adedonline.ResponderClienteActivity;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -38,6 +40,11 @@ public class ThreadEscutaStop implements Runnable {
             } else if (stop.compareTo("confirmadostop") == 0){
                 System.out.println("Fui o primeiro a disparar o stop");
             }
+
+            AsyncTaskDesativaResposta asyncTaskDesativaResposta = new AsyncTaskDesativaResposta(ResponderClienteActivity.listViewResposta,
+                                                                                                ResponderClienteActivity.btnEnviar,
+                                                                                                ResponderClienteActivity.btnEnviarResposta);
+            asyncTaskDesativaResposta.execute(1);
         } catch (IOException ex) {
             Logger.getLogger(ThreadEscutaStop.class.getName()).log(Level.SEVERE, null, ex);
         }
