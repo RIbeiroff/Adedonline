@@ -9,11 +9,12 @@ import java.util.ArrayList;
  */
 
 public class ParticipanteResposta {
-    int id;
-    Socket conexao;
-    ArrayList<String> resposta;
+    public int id;
+    public Socket conexao;
+    public ArrayList<String> resposta;
 
-    public ParticipanteResposta(Socket conexao, ArrayList<String> resposta){
+    public ParticipanteResposta(int id, Socket conexao, ArrayList<String> resposta){
+        this.id = id;
         this.conexao = conexao;
         this.resposta = resposta;
     }
@@ -24,6 +25,10 @@ public class ParticipanteResposta {
 
     public ArrayList<String> getResposta(){
         return resposta;
+    }
+
+    public int getId(){
+        return id;
     }
 }
 

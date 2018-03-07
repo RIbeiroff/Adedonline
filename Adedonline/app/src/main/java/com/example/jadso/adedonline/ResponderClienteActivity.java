@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.jadso.adedonline.Controller.Cliente.ThreadDisparaStop;
@@ -96,7 +98,6 @@ public class ResponderClienteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
     }
 }

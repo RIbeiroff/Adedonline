@@ -80,7 +80,7 @@ public class ThreadEscutaStop implements Runnable {
 
             ArrayList<String> respostas = new ArrayList();
             respostas = convertByteArrayToObject(respostas_recebidas); //Resposta do usuário
-            ResponderServidorActivity.respostas_participantes.add( new ParticipanteResposta(conexao, respostas)); //Armazenando a resposta do participante
+            ResponderServidorActivity.respostas_participantes.add( new ParticipanteResposta(conexao.getPort(), conexao, respostas)); //Armazenando a resposta do participante
 
             System.out.println("RESPOSTA RECEBIBA");
         } catch (IOException ex) {

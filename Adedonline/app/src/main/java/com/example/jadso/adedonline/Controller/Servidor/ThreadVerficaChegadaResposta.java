@@ -1,5 +1,6 @@
 package com.example.jadso.adedonline.Controller.Servidor;
 
+import com.example.jadso.adedonline.CorrecaoRespostaServidorActivity;
 import com.example.jadso.adedonline.Model.ParticipanteResposta;
 import com.example.jadso.adedonline.ResponderServidorActivity;
 import com.example.jadso.adedonline.SalaIniciarActivity;
@@ -58,19 +59,19 @@ public class ThreadVerficaChegadaResposta implements Runnable {
             }
         }
 
-        //Minhas respostas para corrigir
-        ArrayList<ParticipanteResposta> respostas_para_eu_corrigir = new ArrayList<>();
 
 
         //Processo de distribuição das respostas
         //Percorrer as respostas dos participantes
         for (int x = 0; x < ResponderServidorActivity.respostas_participantes.size(); x++){
             ParticipanteResposta participanteResposta =
-                                new ParticipanteResposta( ResponderServidorActivity.respostas_participantes.get(x).getSocket(), ResponderServidorActivity.respostas_participantes.get(x).getResposta());
+                                new ParticipanteResposta( ResponderServidorActivity.respostas_participantes.get(x).getId(),
+                                                          ResponderServidorActivity.respostas_participantes.get(x).getSocket(),
+                                                          ResponderServidorActivity.respostas_participantes.get(x).getResposta());
 
             //Se é diferente de nulo, significa que é a resposta de um participante, sendo assim, eu armazeno para eu responder e envio aos outros participantes
             if (participanteResposta.getSocket() != null)
-                respostas_para_eu_corrigir.add(participanteResposta); //Adiciono para eu (o servidor) responder
+                CorrecaoRespostaServidorActivity.respostas_para_eu_corrigir.add(participanteResposta); //Adiciono para eu (o servidor) responder
 
 
             //Enviando a outros participantes a resposta
@@ -79,6 +80,7 @@ public class ThreadVerficaChegadaResposta implements Runnable {
                     try {
                         DataOutputStream saida_de_dados = new DataOutputStream(conexao.getOutputStream());
                         byte[] dados = convertObjectToByteArray(participanteResposta.getResposta());
+                        saida_de_dados.writeInt(participanteResposta.getId()); //ID da resposta
                         saida_de_dados.writeInt(dados.length);
                         saida_de_dados.write(dados);
                     } catch (IOException e) {
@@ -88,6 +90,9 @@ public class ThreadVerficaChegadaResposta implements Runnable {
             }
 
         }
+
+        AsyncTaskMontaTelaDeCorrecao atualiza_tela = new AsyncTaskMontaTelaDeCorrecao();
+        atualiza_tela.execute(1);
     }
 
 

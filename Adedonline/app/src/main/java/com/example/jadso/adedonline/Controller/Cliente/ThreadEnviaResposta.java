@@ -25,10 +25,8 @@ public class ThreadEnviaResposta implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("ENTREI NESSE CARALHO");
         if (conexao != null) {
             try {
-                System.out.println("ENTREI NESSE CARALHO");
                 DataOutputStream saida_de_dados = new DataOutputStream(conexao.getOutputStream());
                 byte[] dados = convertObjectToByteArray(respostas);
                 saida_de_dados.writeInt(dados.length);

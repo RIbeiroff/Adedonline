@@ -37,6 +37,7 @@ public class RespostaAdapter extends ArrayAdapter<Resposta> {
 
         txtCategoria.setText(elementos.get(position).categoria);
         txtResposta.setText(elementos.get(position).resposta);
+
         return rowView;
     }
 }

@@ -100,7 +100,7 @@ public class ResponderServidorActivity extends AppCompatActivity {
                     respostas.add(resposta);
                 }
 
-                respostas_participantes.add( new ParticipanteResposta(null, respostas));
+                respostas_participantes.add( new ParticipanteResposta(0,null, respostas)); //Id zero = id servidor
                 Intent intent = new Intent(ResponderServidorActivity.this, CorrecaoRespostaServidorActivity.class);
                 startActivity(intent);
             }
