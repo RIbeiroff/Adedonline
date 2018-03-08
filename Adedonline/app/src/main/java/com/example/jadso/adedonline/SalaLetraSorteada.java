@@ -50,7 +50,7 @@ public class SalaLetraSorteada extends AppCompatActivity {
 
         //Startar a thread que recebe a letra sorteada
         System.out.println(SalaEntrar.sala_escolhida);
-        new Thread( new ThreadRecebeDadosServidor(SalaEntrar.conexao, SalaEntrar.pacotes_servidores.get(SalaEntrar.sala_escolhida), this.porta)).start();
+
 
 
         btnConfirmar.setOnClickListener(new View.OnClickListener(){

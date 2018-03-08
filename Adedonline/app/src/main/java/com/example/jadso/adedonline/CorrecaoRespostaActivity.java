@@ -1,5 +1,6 @@
 package com.example.jadso.adedonline;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.jadso.adedonline.Controller.Cliente.ThreadEnviaRespostasCorrigidasServidor;
 import com.example.jadso.adedonline.Controller.Cliente.ThreadRecebeRespostasParticipantes;
 import com.example.jadso.adedonline.Model.ParticipanteResposta;
 import com.example.jadso.adedonline.Model.Resposta;
@@ -22,8 +24,10 @@ public class CorrecaoRespostaActivity extends AppCompatActivity {
     public static FloatingActionButton btnEnviar;
     public static RespostaAdapter respostasAdapter;
     public static ArrayList<Resposta> respostas = new ArrayList<>();
-    public static  ArrayList<ParticipanteResposta> respostasDosParticipantes = new ArrayList<>();
+    public static ArrayList<ParticipanteResposta> respostasDosParticipantes = new ArrayList<>();
+    public static ArrayList<ParticipanteResposta> respostasCorrigidas = new ArrayList<>();
     public static int quantidadeDeRespostas = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +81,27 @@ public class CorrecaoRespostaActivity extends AppCompatActivity {
                 }
 
                 System.out.println("Tamanho do array: " + respostas.size());
-                for (String resposta : respostas){
-                    System.out.println(resposta);
+                int quantCategorias = SalaEntrar.temas_da_sala_escolhida.size() - 1;
+                int participante = 0, contador = 0;
+
+                ArrayList<String> correcoes = new ArrayList();
+
+                for (String correcao : respostas){
+                    correcoes.add(correcao);
+
+                    if (contador == quantCategorias){
+                        respostasCorrigidas.add(new ParticipanteResposta(respostasDosParticipantes.get(participante).id, null, correcoes));
+                        correcoes.clear();
+                        participante++;
+                    }
+
+                    contador++;
                 }
 
+                new Thread ( new ThreadEnviaRespostasCorrigidasServidor() ).start();
+
+                Intent intent = new Intent(CorrecaoRespostaActivity.this, PontuacaoRodadaActivity.class);
+                startActivity(intent);
             }
         });
 

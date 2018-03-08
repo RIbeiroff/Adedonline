@@ -10,10 +10,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.jadso.adedonline.Controller.Servidor.ThreadAguardaSubmissaoCorrecoes;
+import com.example.jadso.adedonline.Controller.Servidor.ThreadRecebeCorrecaoRespostas;
 import com.example.jadso.adedonline.Model.ParticipanteResposta;
 import com.example.jadso.adedonline.Model.Resposta;
 import com.example.jadso.adedonline.Model.RespostaAdapter;
 
+import java.net.Socket;
 import java.util.ArrayList;
 
 /**
@@ -27,6 +30,7 @@ public class CorrecaoRespostaServidorActivity extends AppCompatActivity {
     public static FloatingActionButton btnEnviar;
     public static RespostaAdapter respostasAdapter;
     public static ArrayList<Resposta> respostas = new ArrayList<>();
+    public static ArrayList<ParticipanteResposta> respostasCorrigidas = new ArrayList<>();
     //Minhas respostas para corrigir
     public static ArrayList<ParticipanteResposta> respostas_para_eu_corrigir = new ArrayList<>();
 
@@ -53,6 +57,13 @@ public class CorrecaoRespostaServidorActivity extends AppCompatActivity {
         txtTitulo.setText("Aguardando recebimento das respostas");
 
 
+        new Thread( new ThreadAguardaSubmissaoCorrecoes() ).start();
+
+        for (Socket conexao : SalaIniciarActivity.sala.participantes){
+            new Thread( new ThreadRecebeCorrecaoRespostas(conexao) ).start();
+        }
+
+
         btnEnviar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick( View view){
@@ -76,9 +87,23 @@ public class CorrecaoRespostaServidorActivity extends AppCompatActivity {
                     respostas.add(resposta);
                 }
 
-                for (String resposta : respostas){
-                    System.out.println(resposta);
+                int quantCategorias = SalaIniciarActivity.sala.categorias.size() - 1;
+                int participante = 0, contador = 0;
+
+                ArrayList<String> correcoes = new ArrayList();
+
+                for (String correcao : respostas){
+                    correcoes.add(correcao);
+
+                    if (contador == quantCategorias){
+                        respostasCorrigidas.add(new ParticipanteResposta(respostas_para_eu_corrigir.get(participante).id, null, correcoes));
+                        correcoes.clear();
+                        participante++;
+                        contador = -1;
+                    }
+                    contador++;
                 }
+
             }
         });
     }

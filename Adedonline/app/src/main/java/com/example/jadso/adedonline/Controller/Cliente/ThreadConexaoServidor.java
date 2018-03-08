@@ -58,6 +58,9 @@ public class ThreadConexaoServidor implements Runnable {
                 System.out.println(temas.get(contador));
                 contador++;
             }
+
+        new Thread( new ThreadRecebeDadosServidor(SalaEntrar.conexao, SalaEntrar.pacotes_servidores.get(SalaEntrar.sala_escolhida), this.porta)).start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

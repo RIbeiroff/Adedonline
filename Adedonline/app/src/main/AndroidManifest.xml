@@ -33,7 +33,8 @@
         <activity android:name=".ResponderClienteActivity" />
         <activity android:name=".ResponderServidorActivity" />
         <activity android:name=".CorrecaoRespostaActivity" />
-        <activity android:name=".CorrecaoRespostaServidorActivity"/>
+        <activity android:name=".CorrecaoRespostaServidorActivity" />
+        <activity android:name=".PontuacaoRodadaActivity"></activity>
     </application>
 
 </manifest>
